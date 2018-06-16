@@ -31,6 +31,32 @@ const SWIPE_THRESHOLD = 120;
 
 const styles = StyleSheet.create({
 
+	headStyle: {
+		fontSize: 50
+	},
+
+	viewStyle: {
+		backgroundColor: '#F8F8F8',
+		justifyContent: 'center',
+		alignItems: 'center',
+		height: 100,
+		paddingTop: 15,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2},
+		shadowOpacity: 0.2,
+		elevation: 2,
+		position: 'relative'
+	},
+
+	cardText3:{
+  	fontSize: 25,
+  	justifyContent: 'center',
+    alignItems: 'center',
+    height: 180,
+    textAlign: 'center',
+  	
+  },
+
   cardText1:{
   	fontSize: 25,
   	justifyContent: 'center',
@@ -43,10 +69,11 @@ const styles = StyleSheet.create({
   	fontSize: 25,
   	justifyContent: 'center',
     alignItems: 'center',
-    height: 100,
+    height: 120,
     textAlign: 'center',
   	
   },
+  
   buttonStyle: {
   	justifyContent: 'center',
     alignItems: 'center',
@@ -408,6 +435,7 @@ class SwipeCards extends Component {
     this.state.pan.setValue({ x: 0, y: 0 });
     this.state.enter.setValue(0);
     this._animateEntrance();
+
     this._goToNextCard();
     
   }
@@ -427,66 +455,6 @@ class SwipeCards extends Component {
     return <Defaults.NoMoreCards />;
   }
 
-  /**
-   * Renders the cards as a stack with props.stackDepth cards deep.
-   */
-  renderStack() {
-    if (!this.state.card) {
-      return this.renderNoMoreCards();
-    }
-
-    //Get the next stack of cards to render.
-    let cards = this.state.cards.slice(currentIndex[this.guid], currentIndex[this.guid] + this.props.stackDepth).reverse();
-
-    return cards.map((card, i) => {
-
-      let offsetX = this.props.stackOffsetX * cards.length - i * this.props.stackOffsetX;
-      let lastOffsetX = offsetX + this.props.stackOffsetX;
-
-      let offsetY = this.props.stackOffsetY * cards.length - i * this.props.stackOffsetY;
-      let lastOffsetY = offsetY + this.props.stackOffsetY;
-
-      let opacity = 0.25 + (0.75 / cards.length) * (i + 1);
-      let lastOpacity = 0.25 + (0.75 / cards.length) * i;
-
-      let scale = 0.85 + (0.15 / cards.length) * (i + 1);
-      let lastScale = 0.85 + (0.15 / cards.length) * i;
-
-      let style = {
-        position: 'absolute',
-        top: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOffsetY, offsetY] }),
-        left: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOffsetX, offsetX] }),
-        opacity: this.props.smoothTransition ? 1 : this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastOpacity, opacity] }),
-        transform: [{ scale: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastScale, scale] }) }],
-        elevation: i * 10
-      };
-
-      //Is this the top card?  If so animate it and hook up the pan handlers.
-      if (i + 1 === cards.length) {
-        let {pan} = this.state;
-        let [translateX, translateY] = [pan.x, pan.y];
-
-        let rotate = pan.x.interpolate({ inputRange: [-200, 0, 200], outputRange: ["-30deg", "0deg", "30deg"] });
-        let opacity = this.props.smoothTransition ? 1 : pan.x.interpolate({ inputRange: [-200, 0, 200], outputRange: [0.5, 1, 0.5] });
-
-        let animatedCardStyles = {
-          ...style,
-          transform: [
-            { translateX: translateX },
-            { translateY: translateY },
-            { rotate: rotate },
-            { scale: this.state.enter.interpolate({ inputRange: [0, 1], outputRange: [lastScale, scale] }) }
-          ]
-        };
-
-        return <Animated.View key={card[this.props.cardKey]} style={[styles.card, animatedCardStyles]} {... this._panResponder.panHandlers}>
-          {this.props.renderCard(this.state.card)}
-        </Animated.View>;
-      }
-
-      return <Animated.View key={card[this.props.cardKey]} style={style}>{this.props.renderCard(card)}</Animated.View>;
-    });
-  }
 
   renderCard() {
     if (!this.state.card) {
@@ -505,12 +473,14 @@ class SwipeCards extends Component {
 
     let animatedCardStyles = { transform: [{ translateX }, { translateY }, { rotate }, { scale }], opacity };	
 
-    () => this.state.card.setState({ ButtonState:'______'});
+    
 
     return <Animated.View key={"top"} style={[styles.card, animatedCardStyles]} {... this._panResponder.panHandlers}>
       {this.props.renderCard(this.state.card)}
     </Animated.View>;
   }
+
+
 
   renderNope() {
     let {pan} = this.state;
@@ -539,6 +509,9 @@ class SwipeCards extends Component {
   }
 
 
+
+
+
   renderYup() {
     let {pan} = this.state;
 
@@ -564,11 +537,12 @@ class SwipeCards extends Component {
     return null;
   }
 
+
+
+
+
+
   render() {
-
-
-
-  	
 
     return (
       <View style={styles.container}>
@@ -586,46 +560,167 @@ class SwipeCards extends Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Card extends React.Component {
+
+	static state = {ButtonState: '__________', status: 0}
   constructor(props) {
     super(props);
-    this.state = {ButtonState: '______'}
-  }
+    this.state = {ButtonState: '__________',
+					status: true}
+}
 
 
 
- 
+shouldComponentUpdate(nextProps, nextStates){
 
-  
+	if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
+		return true;
+	}	
+
+	if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') == 0 ){
+		return false;
+	}
+	if( this.state.ButtonState.localeCompare('__________') ==0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
+		return true;
+	}
+	if( (this.state.ButtonState.localeCompare('__________') == 0) && (nextStates.ButtonState.localeCompare('__________') == 0) ){
+		return true;
+	}
+
+	
+}
+
+componentDidUpdate(prevProps, prevState){
+	if( prevState.ButtonState.localeCompare('__________') == 0 && this.state.ButtonState.localeCompare('__________') != 0 ){
+		this.setState({ButtonState: '__________'});
+	}
+}
 
   render() {
 
   	
-
+  	
+  	
 	
 
     return (
 
        <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
 
+       
+
 	   <Text style={[styles.cardText1]}>{this.props.text}</Text>
        <Text style={[styles.cardText2]}>{this.state.ButtonState}</Text>
 
 
 
-       <Button style={[styles.buttonStyle]} onPress={  () => this.setState({ ButtonState: this.props.myText }) } title='Show Answer'> </Button>
+       <Button style={[styles.buttonStyle]} onPress={  () => this.setState({ ButtonState: this.props.myText, status: true }) } title='Show Answer'> </Button>
        <Text></Text>
        <Text></Text>
        <Text></Text>
        <Text></Text>
 
-        <Button onPress={  () => this.setState({ ButtonState: '__________' }) } title='Hide Answer'>
-			
-		</Button>
+       	
       </View>
     )
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class NoMoreCards extends Component {
   constructor(props) {
@@ -644,21 +739,57 @@ class NoMoreCards extends Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [
-        {text: 'Where did the Third Estate form and announce the National Assembly?', backgroundColor: 'orange', myText: 'Indoor Tennis Court'},
-        {text: 'Factor for the rise of Napolean', backgroundColor: 'orange', myText: 'Political instability of the Directory'},
-        {text: 'Members of the Jacbbin Club were known as', backgroundColor: 'orange', myText: 'San-culottes'},
-        {text: 'National Anthem of France', backgroundColor: 'orange', myText: 'Morseillaise'},
-        {text: 'Bundle of rods or fasces symbolised', backgroundColor: 'orange', myText: 'Strength lies in unity'},
-        {text: 'the main objective of the Constitution of 1791', backgroundColor: 'orange', myText: 'establish a constitutional monarchy'},
-        {text: 'Members of the Third Estate were led by', backgroundColor: 'orange', myText: 'Mirabeau and Abbe Sieyes'},
-        {text: 'Voting in the Estates General was conducted on the principle of', backgroundColor: 'orange', myText: 'each Estate one vote'},
-        {text: 'Who advocated government based on Social Contract?', backgroundColor: 'orange', myText: 'Rousseau'},
-        {text: 'King in France at the time of the Revolution', backgroundColor: 'orange', myText: 'Louis XVI'},
+        {probno: '1', text: 'Where did the Third Estate form and announce the National Assembly?', backgroundColor: 'orange', myText: 'Indoor Tennis Court'},
+        {probno: '2',text: 'Factor for the rise of Napolean', backgroundColor: 'orange', myText: 'Political instability of the Directory'},
+        {probno: '3',text: 'Members of the Jacbbin Club were known as', backgroundColor: 'orange', myText: 'San-culottes'},
+        {probno: '4',text: 'National Anthem of France', backgroundColor: 'orange', myText: 'Morseillaise'},
+        {probno: '5',text: 'Bundle of rods or fasces symbolised', backgroundColor: 'orange', myText: 'Strength lies in unity'},
+        {probno: '6',text: 'the main objective of the Constitution of 1791', backgroundColor: 'orange', myText: 'establish a constitutional monarchy'},
+        {probno: '7',text: 'Members of the Third Estate were led by', backgroundColor: 'orange', myText: 'Mirabeau and Abbe Sieyes'},
+        {probno: '8',text: 'Voting in the Estates General was conducted on the principle of', backgroundColor: 'orange', myText: 'each Estate one vote'},
+        {probno: '9',text: 'Who advocated government based on Social Contract?', backgroundColor: 'orange', myText: 'Rousseau'},
+        {probno: '10',text: 'King in France at the time of the Revolution', backgroundColor: 'orange', myText: 'Louis XVI'},
         
 
       ]
@@ -678,6 +809,8 @@ export default class extends React.Component {
     // If you want a stack of cards instead of one-per-one view, activate stack mode
     // stack={true}
     return (
+    	<View>
+    	<View style={styles.viewStyle}><Text style={styles.headStyle}>Purah</Text></View>
       <SwipeCards
         cards={this.state.cards}
         renderCard={(cardData) => <Card {...cardData} />}
@@ -688,6 +821,7 @@ export default class extends React.Component {
         handleMaybe={this.handleMaybe}
         hasMaybeAction
       />
+      </View>
     )
   }
 }
