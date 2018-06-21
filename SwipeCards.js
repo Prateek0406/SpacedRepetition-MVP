@@ -32,11 +32,12 @@ const SWIPE_THRESHOLD = 120;
 const styles = StyleSheet.create({
 
   headStyle: {
+    color: '#005f6b',
     fontSize: 50
   },
 
   viewStyle: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#fafaed',
     justifyContent: 'center',
     alignItems: 'center',
     height: 100,
@@ -55,11 +56,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     textAlign: 'center',
+    color: '#005f6b'
     
   },
 
   cardText1:{
-    
+    color: '#005f6b',
     fontSize: 25,
     justifyContent: 'center',
     alignItems: 'center',
@@ -68,6 +70,7 @@ const styles = StyleSheet.create({
     
   },
   cardText2:{
+    color: '#005f6b',
     padding: 20,
     fontSize: 25,
     justifyContent: 'center',
