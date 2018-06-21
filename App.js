@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 
-import SwipeCards from './SwipeCards';
+import SwipeCards from './SwipeCards'; 
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +

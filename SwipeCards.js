@@ -31,57 +31,70 @@ const SWIPE_THRESHOLD = 120;
 
 const styles = StyleSheet.create({
 
-	headStyle: {
-		fontSize: 50
-	},
+  headStyle: {
+    fontSize: 50
+  },
 
-	viewStyle: {
-		backgroundColor: '#F8F8F8',
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: 100,
-		paddingTop: 15,
-		shadowColor: '#000',
-		shadowOffset: { width: 0, height: 2},
-		shadowOpacity: 0.2,
-		elevation: 2,
-		position: 'relative'
-	},
-
-	cardText3:{
-  	fontSize: 25,
-  	justifyContent: 'center',
+  viewStyle: {
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 180,
+    height: 100,
+    paddingTop: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2},
+    shadowOpacity: 0.2,
+    elevation: 2,
+    position: 'relative'
+  },
+
+  cardText3:{
+    
+    fontSize: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
     textAlign: 'center',
-  	
+    
   },
 
   cardText1:{
-  	fontSize: 25,
-  	justifyContent: 'center',
+    
+    fontSize: 25,
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 150,
+    flex: 1,
     textAlign: 'center',
-  	
+    
   },
   cardText2:{
-  	fontSize: 25,
-  	justifyContent: 'center',
+    padding: 20,
+    fontSize: 25,
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 120,
+    flex: 1,
     textAlign: 'center',
-  	
+    
   },
   
-  buttonStyle: {
-  	justifyContent: 'center',
+  buttonStyle1: {
+    justifyContent: 'center',
     alignItems: 'center',
-    height: 200,
+    flex:1,
+
+
+  },
+
+  buttonStyle2: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex:1,
+
 
   },
 
   card: {
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
@@ -256,7 +269,7 @@ class SwipeCards extends Component {
         }
 
         if (vx > 0) {
-         	 velocity = clamp(vx, 3, 5);
+           velocity = clamp(vx, 3, 5);
         } else if (vx < 0) {
           velocity = clamp(vx * -1, 3, 5) * -1;
         } else {
@@ -471,7 +484,7 @@ class SwipeCards extends Component {
 
     let scale = enter;
 
-    let animatedCardStyles = { transform: [{ translateX }, { translateY }, { rotate }, { scale }], opacity };	
+    let animatedCardStyles = { transform: [{ translateX }, { translateY }, { rotate }, { scale }], opacity }; 
 
     
 
@@ -546,7 +559,7 @@ class SwipeCards extends Component {
 
     return (
       <View style={styles.container}>
-      	{this.props.stack ? this.renderStack() : this.renderCard() }
+        {this.props.stack ? this.renderStack() : this.renderCard() }
         {this.renderNope()}
         
         {this.renderYup()}
@@ -617,65 +630,69 @@ class SwipeCards extends Component {
 
 class Card extends React.Component {
 
-	static state = {ButtonState: '__________', status: 0}
+  static state = {ButtonState: '__________', status: 0}
   constructor(props) {
     super(props);
     this.state = {ButtonState: '__________',
-					status: true}
+          status: true}
 }
 
 
 
 shouldComponentUpdate(nextProps, nextStates){
 
-	if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
-		return true;
-	}	
+  if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
+    return true;
+  } 
 
-	if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') == 0 ){
-		return false;
-	}
-	if( this.state.ButtonState.localeCompare('__________') ==0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
-		return true;
-	}
-	if( (this.state.ButtonState.localeCompare('__________') == 0) && (nextStates.ButtonState.localeCompare('__________') == 0) ){
-		return true;
-	}
+  if( this.state.ButtonState.localeCompare('__________') !=0 && nextStates.ButtonState.localeCompare('__________') == 0 ){
+    return false;
+  }
+  if( this.state.ButtonState.localeCompare('__________') ==0 && nextStates.ButtonState.localeCompare('__________') != 0 ){
+    return true;
+  }
+  if( (this.state.ButtonState.localeCompare('__________') == 0) && (nextStates.ButtonState.localeCompare('__________') == 0) ){
+    return true;
+  }
 
-	
+  
 }
 
 componentDidUpdate(prevProps, prevState){
-	if( prevState.ButtonState.localeCompare('__________') == 0 && this.state.ButtonState.localeCompare('__________') != 0 ){
-		this.setState({ButtonState: '__________'});
-	}
+  if( prevState.ButtonState.localeCompare('__________') == 0 && this.state.ButtonState.localeCompare('__________') != 0 ){
+    this.setState({ButtonState: '__________'});
+  }
 }
 
   render() {
 
-  	
-  	
-  	
-	
+    
+    
+    
+  
 
     return (
 
        <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
 
+     
+        <Text style={[styles.cardText3]}>{this.props.probno}</Text> 
+     <Text style={[styles.cardText1]}>{this.props.text}</Text> 
+     
+      
+       <Text style={[styles.cardText2]}>{this.state.ButtonState}</Text>
        
 
-	   <Text style={[styles.cardText1]}>{this.props.text}</Text>
-       <Text style={[styles.cardText2]}>{this.state.ButtonState}</Text>
+       <View style={{padding: 45}}>
+       <Button style={[styles.buttonStyle1]} onPress={  () => this.setState({ ButtonState: this.props.myText, status: true }) } title='Show Answer'> </Button>
+      </View>
+      <View style={{padding: 10}}>
+       <Button style={[styles.buttonStyle2]} onPress={  () => {} } title='Archive this!'> </Button>
+       </View>
+       
 
 
-
-       <Button style={[styles.buttonStyle]} onPress={  () => this.setState({ ButtonState: this.props.myText, status: true }) } title='Show Answer'> </Button>
-       <Text></Text>
-       <Text></Text>
-       <Text></Text>
-       <Text></Text>
-
-       	
+        
       </View>
     )
   }
@@ -809,8 +826,11 @@ export default class extends React.Component {
     // If you want a stack of cards instead of one-per-one view, activate stack mode
     // stack={true}
     return (
-    	<View>
-    	<View style={styles.viewStyle}><Text style={styles.headStyle}>Purah</Text></View>
+
+      <View>
+      <View style={styles.viewStyle}><Text style={styles.headStyle}>  AGain  </Text>
+      </View>
+      
       <SwipeCards
         cards={this.state.cards}
         renderCard={(cardData) => <Card {...cardData} />}
@@ -825,4 +845,3 @@ export default class extends React.Component {
     )
   }
 }
-
